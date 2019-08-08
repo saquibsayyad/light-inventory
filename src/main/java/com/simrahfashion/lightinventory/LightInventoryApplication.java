@@ -9,5 +9,4 @@ public class LightInventoryApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LightInventoryApplication.class, args);
 	}
-
 }
