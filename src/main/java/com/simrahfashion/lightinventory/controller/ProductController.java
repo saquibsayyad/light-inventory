@@ -11,7 +11,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
-@RestController("/product")
+@RestController
+@RequestMapping("/product")
 @AllArgsConstructor
 public class ProductController {
 
@@ -22,8 +23,8 @@ public class ProductController {
         return service.findAllProducts();
     }
 
-    @GetMapping("{productId}")
-    public Mono<Optional<Product>> getProduct(final String id){
+    @GetMapping("/{id}")
+    public Mono<Optional<Product>> getProduct(@PathVariable final Integer id){
         return service.findProduct(id);
     }
 

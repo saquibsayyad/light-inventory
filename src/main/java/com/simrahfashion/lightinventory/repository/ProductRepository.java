@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findAllByName(final String name);
 
-    @Query("SELECT * FROM product p WHERE p.name LIKE '%name%'")
+    @Query("FROM Product p WHERE p.name LIKE '%name%'")
     List<Product> findAllWhichHasName(final String name);
 }

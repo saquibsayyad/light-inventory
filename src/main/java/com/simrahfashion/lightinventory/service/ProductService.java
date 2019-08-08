@@ -23,7 +23,7 @@ public class ProductService {
         return Flux.defer(() -> Flux.fromIterable(productRepository.findAllByName(name)));
     }
 
-    public Mono<Optional<Product>> findProduct(final String id){
+    public Mono<Optional<Product>> findProduct(final Integer id){
         return Mono.defer(() -> Mono.fromSupplier(() -> productRepository.findById(id)));
     }
 
