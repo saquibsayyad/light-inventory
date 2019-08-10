@@ -1,6 +1,5 @@
 package com.simrahfashion.lightinventory.controller;
 
-
 import com.simrahfashion.lightinventory.controller.dto.ProductDTO;
 import com.simrahfashion.lightinventory.entity.Product;
 import com.simrahfashion.lightinventory.service.ProductService;
@@ -12,7 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/product")
+@RequestMapping("/products")
 @AllArgsConstructor
 public class ProductController {
 
@@ -29,12 +28,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public Mono<Product> addProduct(@RequestBody Product product) {
+    public Mono<Product> addProduct(@RequestBody final Product product) {
         return service.addProduct(product);
     }
 
     @PutMapping
-    public Mono<Product> updateProduct(@RequestBody Product product) {
+    public Mono<Product> updateProduct(@RequestBody final Product product) {
         return service.updateProduct(product);
+    }
+
+    @DeleteMapping("/{id}")
+    public Mono<Void> deleteProduct(@PathVariable final Integer id) {
+        return service.deleteProduct(id);
     }
 }

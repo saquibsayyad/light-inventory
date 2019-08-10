@@ -14,7 +14,6 @@ import java.util.Optional;
 public class ProductService {
     private ProductRepository productRepository;
 
-
     public Flux<Product> findAllProducts(){
         return Flux.defer(() -> Flux.fromIterable(productRepository.findAll()));
     }
@@ -37,5 +36,9 @@ public class ProductService {
 
     public Mono<Product> updateProduct(Product product) {
         return Mono.defer(() -> Mono.fromSupplier(() -> productRepository.save(product)));
+    }
+
+    public Mono<Void> deleteProduct(final Integer id) {
+        return Mono.defer(() -> Mono.fromRunnable(() -> productRepository.deleteById(id)));
     }
 }
