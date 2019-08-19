@@ -26,8 +26,8 @@ public class Sale {
     @Column
     private BigDecimal salesAmount;
 
-    @Column
-    private Date timeCreated;
+    @Column(insertable = false, updatable = false)
+    private Date timeCreated = new Date();
 
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<ProductSale> productSale;

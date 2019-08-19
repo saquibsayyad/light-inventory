@@ -32,12 +32,10 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
-			<version>1.4.199</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -80,5 +78,4 @@
 			<url>https://repo.spring.io/libs-snapshot</url>
 		</pluginRepository>
 	</pluginRepositories>
-
 </project>

@@ -21,5 +21,8 @@ public class Tax {
     private String name;
 
     @Column
+    private String description;
+
+    @Column
     private BigDecimal rate;
 }

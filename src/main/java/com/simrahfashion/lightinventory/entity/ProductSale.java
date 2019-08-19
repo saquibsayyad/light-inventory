@@ -1,6 +1,8 @@
 package com.simrahfashion.lightinventory.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -8,16 +10,17 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name="ProductSales")
+@EqualsAndHashCode(exclude = {"sale", "product"})
 public class ProductSale implements Serializable {
-
     @Id
+    private Integer id;
+
     @ManyToOne
-    @JoinColumn
+    @JsonIgnore
     private Sale sale;
 
-    @Id
     @ManyToOne
-    @JoinColumn
+    @JsonIgnore
     private Product product;
 
     @Column
