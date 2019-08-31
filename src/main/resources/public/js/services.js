@@ -9,26 +9,41 @@ myApp.services = {
   */
 
   sales: {
-    create: function(data) {
-      var taskItem = ons.createElement(
-        '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category)+ '">' +
+    create: function(sale) {
+      var saleListItem = ons.createElement(
+        '<ons-list-item tappable>' +
           '<label class="left">' +
-           data.id +
+          sale.id +
           '</label>' +
           '<div class="center">' +
-            data.title +
+          sale.totalAmountFmt +
           '</div>' +
           '<div class="right">' +
-            '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
+          sale.salesTime +
+          //   '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
           '</div>' +
         '</ons-list-item>'
       );
 
       // Store data within the element.
-      taskItem.data = data;
+      saleListItem.data = sale;
 
       var salesList = document.querySelector('#sales-list');
-      salesList.insertBefore(taskItem, taskItem.data.urgent ? salesList.firstChild : null);
+      salesList.insertBefore(saleListItem);
+
+      // Add functionality to push 'sales_details.html' page with the current element as a parameter.
+      salesList.onclick = function() {
+        document.querySelector('#myNavigator')
+          .pushPage('html/sales_details.html',
+            {
+              animation: 'lift',
+              data: {
+                element: saleListItem
+              }
+            }
+          );
+      };
+
     }
   },
   /////////////////
@@ -245,33 +260,19 @@ myApp.services = {
     }
   },
 
-  ////////////////////////
-  // Initial Data Service //
-  ////////////////////////
-  salesList: [
-    {
-      id: 1,
-      title: 'Download OnsenUI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      id: 2,
-      title: 'Install Monaca CLI',
-      category: 'Programming',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
-    },
-    {
-      id: 3,
-      title: 'Star Onsen UI repo on Github',
-      category: 'Super important',
-      description: 'Some description.',
-      highlight: false,
-      urgent: false
+  getSalesList: async function() {
+    var opts = {
+      method: 'GET',      
+      headers: {}
+    };
+    const response = await fetch('/sales', opts);
+    return response.json();
+  },
+
+  util: {
+    formatAmount: function(amount) {
+      var amount = parseFloat(amount);
+      return amount.toFixed(2);
     }
-  ]
+  }
 };

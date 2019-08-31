@@ -12,6 +12,8 @@ import java.io.Serializable;
 @Table(name="ProductSales")
 @EqualsAndHashCode(exclude = {"sale", "product"})
 public class ProductSale implements Serializable {
+    private static final long serialVersionUID = 210416633855792364L;
+
     @Id
     private Integer id;
 
@@ -20,7 +22,6 @@ public class ProductSale implements Serializable {
     private Sale sale;
 
     @ManyToOne
-    @JsonIgnore
     private Product product;
 
     @Column

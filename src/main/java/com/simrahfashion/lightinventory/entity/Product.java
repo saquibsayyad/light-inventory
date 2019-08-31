@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Data
@@ -15,7 +17,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name="Products")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Product {
+public class Product implements Serializable {
+
+    private static final long serialVersionUID = 8087469496496085573L;
 
     @Id
     @GeneratedValue

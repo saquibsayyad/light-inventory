@@ -20,7 +20,52 @@ myApp.controllers = {
   },
 
   salesListPage: function(page) {
+    myApp.services.getSalesList().then(function(sales){
+      sales.forEach(function(sale) {
+        var date = new Date(sale.timeCreated);
+        sale.salesTime = date.toLocaleTimeString();
+        sale.totalAmountFmt = myApp.services.util.formatAmount(sale.totalAmount);
+        sale.totalTaxFmt = myApp.services.util.formatAmount(sale.totalTax);
+        sale.salesAmountFmt = myApp.services.util.formatAmount(sale.salesAmount);
+        myApp.services.sales.create(sale);
+    });
+    })
+  },
 
+  salesDetailsPage: function(page) {
+    // Get the element passed as argument to pushPage.
+    var salesItem = page.data.element;
+
+    // Fill the view with the stored data.
+    page.querySelector('#id').value = salesItem.data.id;
+    page.querySelector('#totalAmount').value = salesItem.data.totalAmountFmt;
+    page.querySelector('#totalSales').value = salesItem.data.salesAmountFmt;
+    page.querySelector('#totalTax').value = salesItem.data.totalTaxFmt;
+
+    var productList = page.querySelector('#productList');
+
+    salesItem.data.productSale.forEach(function(productSales){
+      var productListItem = ons.createElement(
+        '<ons-list-item tappable>' +
+          '<label class="left">' +
+          productSales.id +
+          '</label>' +
+          '<label class="left">' +
+          productSales.product.name +
+          '</label>' +
+          '<div class="center">' +
+          productSales.saleQuantity +
+          '</div>' +
+          '<div class="right">' +
+          productSales.salePrice +
+          '</div>' +
+        '</ons-list-item>'
+      );
+  
+      // Store data within the element.
+      productListItem.data = productSales;
+      productList.insertBefore(productListItem);
+    });
   },
 
   //////////////////////////
