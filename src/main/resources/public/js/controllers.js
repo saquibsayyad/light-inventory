@@ -32,6 +32,15 @@ myApp.controllers = {
     })
   },
 
+  productListPage: function(page) {
+      myApp.services.products.getList().then(function(products){
+        products.forEach(function(product) {
+            product.priceFmt = myApp.services.util.formatAmount(product.price);
+            myApp.services.products.create(product);
+      });
+      })
+    },
+
   salesDetailsPage: function(page) {
     // Get the element passed as argument to pushPage.
     var salesItem = page.data.element;
@@ -67,6 +76,17 @@ myApp.controllers = {
       productList.insertBefore(productListItem);
     });
   },
+
+   productDetailsPage: function(page) {
+      // Get the element passed as argument to pushPage.
+      var productItem = page.data.element;
+
+      // Fill the view with the stored data.
+      page.querySelector('#id').value = productItem.data.id;
+      page.querySelector('#name').value = productItem.data.name;
+      page.querySelector('#quantity').value = productItem.data.quantity;
+      page.querySelector('#price').value = productItem.data.price;
+    },
 
   //////////////////////////
   // Tabbar Page Controller //

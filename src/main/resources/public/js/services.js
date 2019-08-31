@@ -34,7 +34,7 @@ myApp.services = {
       // Add functionality to push 'sales_details.html' page with the current element as a parameter.
       salesList.onclick = function() {
         document.querySelector('#myNavigator')
-          .pushPage('html/sales_details.html',
+          .pushPage('html/sale_details.html',
             {
               animation: 'lift',
               data: {
@@ -46,6 +46,55 @@ myApp.services = {
 
     }
   },
+
+   products: {
+      create: function(product) {
+        var productListItem = ons.createElement(
+            '<ons-list-item tappable>' +
+              '<label class="left">' +
+              product.id +
+              '</label>' +
+              '<div class="center">' +
+              product.name +
+              '</div>' +
+              '<div class="right">' +
+               product.quantity +
+              '</div>' +
+              '<div class="right">' +
+              product.price +
+              '</div>' +
+            '</ons-list-item>'
+        );
+
+        // Store data within the element.
+            productListItem.data = product;
+
+            var productsList = document.querySelector('#product-list');
+            productsList.insertBefore(productListItem);
+
+            // Add functionality to push 'sales_details.html' page with the current element as a parameter.
+            productsList.onclick = function() {
+            document.querySelector('#myNavigator')
+              .pushPage('html/product_details.html',
+                {
+                  animation: 'lift',
+                  data: {
+                    element: productListItem
+                  }
+                }
+              );
+          };
+      },
+
+      getList: async function() {
+        var opts = {
+          method: 'GET',
+          headers: {}
+        };
+        const response = await fetch('/products', opts);
+        return response.json();
+     },
+    },
   /////////////////
   // Task Service //
   /////////////////

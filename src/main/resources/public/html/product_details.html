@@ -1,0 +1,53 @@
+<ons-page id="productDetailsPage">
+    <ons-toolbar>
+        <div class="left"><ons-back-button>Back</ons-back-button></div>
+        <div class="center">Product Details</div>
+        <!-- <div class="right">
+          <ons-toolbar-button component="button/save-task">
+            <ons-if platform="android">
+              <ons-icon icon="md-save"></ons-icon>
+            </ons-if>
+            <ons-if platform="ios other">
+              Save
+            </ons-if>
+          </ons-toolbar-button>
+        </div> -->
+    </ons-toolbar>
+    <ons-list>
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Product ID
+            </ons-if>
+            <div class="center">
+                <ons-input id="id" type="text" placeholder="Product ID" float disabled></ons-input>
+            </div>
+        </ons-list-item>
+
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Name
+            </ons-if>
+            <div class="center">
+                <ons-input id="name" type="text" placeholder="Name" float disabled></ons-input>
+            </div>
+        </ons-list-item>
+
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Quantity
+            </ons-if>
+            <div class="center">
+                <ons-input id="quantity" type="text" placeholder="Quantity" float disabled></ons-input>
+            </div>
+        </ons-list-item>
+
+        <ons-list-item modifier="nodivider">
+            <ons-if platform="ios other" class="left left-label">
+                Price
+            </ons-if>
+            <div class="center">
+                <ons-input id="price" type="text" placeholder="Price" float disabled></ons-input>
+            </div>
+        </ons-list-item>
+    </ons-list>
+</ons-page>
