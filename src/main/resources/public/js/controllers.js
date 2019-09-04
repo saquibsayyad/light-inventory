@@ -46,10 +46,10 @@ myApp.controllers = {
     var salesItem = page.data.element;
 
     // Fill the view with the stored data.
-    page.querySelector('#id').value = salesItem.data.id;
-    page.querySelector('#totalAmount').value = salesItem.data.totalAmountFmt;
-    page.querySelector('#totalSales').value = salesItem.data.salesAmountFmt;
-    page.querySelector('#totalTax').value = salesItem.data.totalTaxFmt;
+    page.querySelector('#id').innerHTML = salesItem.data.id;
+    page.querySelector('#totalAmount').innerHTML = salesItem.data.totalAmountFmt;
+    page.querySelector('#totalSales').innerHTML = salesItem.data.salesAmountFmt;
+    page.querySelector('#totalTax').innerHTML = salesItem.data.totalTaxFmt;
 
     var productList = page.querySelector('#productList');
 
@@ -59,10 +59,10 @@ myApp.controllers = {
           '<label class="left">' +
           productSales.id +
           '</label>' +
-          '<label class="left">' +
+          '<label class="center">' +
           productSales.product.name +
           '</label>' +
-          '<div class="center">' +
+          '<div class="right">' +
           productSales.saleQuantity +
           '</div>' +
           '<div class="right">' +
@@ -82,10 +82,10 @@ myApp.controllers = {
       var productItem = page.data.element;
 
       // Fill the view with the stored data.
-      page.querySelector('#id').value = productItem.data.id;
-      page.querySelector('#name').value = productItem.data.name;
-      page.querySelector('#quantity').value = productItem.data.quantity;
-      page.querySelector('#price').value = productItem.data.price;
+      page.querySelector('#id').innerHTML = productItem.data.id;
+      page.querySelector('#name').innerHTML = productItem.data.name;
+      page.querySelector('#quantity').innerHTML = productItem.data.quantity;
+      page.querySelector('#price').innerHTML = productItem.data.price;
     },
 
   //////////////////////////
