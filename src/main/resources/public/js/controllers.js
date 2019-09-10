@@ -33,13 +33,15 @@ myApp.controllers = {
   },
 
   productListPage: function(page) {
-      myApp.services.products.getList().then(function(products){
-        products.forEach(function(product) {
-            product.priceFmt = myApp.services.util.formatAmount(product.price);
-            myApp.services.products.create(product);
-      });
-      })
-    },
+    myApp.repository.products = [];
+    myApp.services.products.getList().then(function(products){
+      products.forEach(function(product) {
+          product.priceFmt = myApp.services.util.formatAmount(product.price);
+          myApp.repository.products.push(product);
+          myApp.services.products.create(product);
+    });
+    })
+  },
 
   salesDetailsPage: function(page) {
     // Get the element passed as argument to pushPage.
@@ -77,7 +79,7 @@ myApp.controllers = {
     });
   },
 
-   productDetailsPage: function(page) {
+  productDetailsPage: function(page) {
       // Get the element passed as argument to pushPage.
       var productItem = page.data.element;
 
@@ -86,7 +88,7 @@ myApp.controllers = {
       page.querySelector('#name').value = productItem.data.name;
       page.querySelector('#quantity').value = productItem.data.quantity;
       page.querySelector('#price').value = productItem.data.price;
-    },
+  },
 
   //////////////////////////
   // Tabbar Page Controller //
@@ -98,9 +100,9 @@ myApp.controllers = {
     };
 
     // Set button functionality to push 'new_task.html' page.
-    Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-task"]'), function(element) {
+    Array.prototype.forEach.call(page.querySelectorAll('[component="button/new-sale"]'), function(element) {
       element.onclick = function() {
-        document.querySelector('#myNavigator').pushPage('html/new_task.html');
+        document.querySelector('#myNavigator').pushPage('html/create_sales.html');
       };
 
       element.show && element.show(); // Fix ons-fab in Safari.
@@ -122,38 +124,63 @@ myApp.controllers = {
     document.querySelector('#mySplitter').left.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');
   },
 
-  ////////////////////////////
-  // New Task Page Controller //
-  ////////////////////////////
-  newTaskPage: function(page) {
-    // Set button functionality to save a new task.
-    Array.prototype.forEach.call(page.querySelectorAll('[component="button/save-task"]'), function(element) {
+  createSalesPage: function(page) {
+
+    var productSearchListElement = page.querySelector("#productSearchList");
+    var productsListElement = page.querySelector("#productsList");
+    var totalAmountInput = page.querySelector("#totalAmount");
+    
+    var selectedProducts = [];
+
+    var refreshSelectedProductList = function() {
+      productsListElement.innerHTML = '';
+      var total = 0;
+      selectedProducts.forEach(function(product){
+        var listItem = myApp.services.util.createProductListItem(product);
+        productsListElement.insertBefore(listItem);
+        total += product.price;
+      });
+      totalAmountInput.value = myApp.services.util.formatAmount(total);
+    };
+
+    
+    Array.prototype.forEach.call(page.querySelectorAll('[component="button/create-sales"]'), function(element) {
       element.onclick = function() {
-        var newTitle = page.querySelector('#title-input').value;
-
-        if (newTitle) {
-          // If input title is not empty, create a new task.
-          myApp.services.tasks.create(
-            {
-              title: newTitle,
-              category: page.querySelector('#category-input').value,
-              description: page.querySelector('#description-input').value,
-              highlight: page.querySelector('#highlight-input').checked,
-              urgent: page.querySelector('#urgent-input').checked
-            }
-          );
-
-          // Set selected category to 'All', refresh and pop page.
-          document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
-          document.querySelector('#default-category-list ons-list-item').updateCategoryView();
-          document.querySelector('#myNavigator').popPage();
-
-        } else {
-          // Show alert if the input title is empty.
-          ons.notification.alert('You must provide a task title.');
-        }
+        alert("not implemented yet");
       };
     });
+
+    page.querySelector("#query").onkeyup = function(target){
+      var products = myApp.services.products.search(target.srcElement.value);
+      productSearchListElement.innerHTML = '';
+
+      if(products.length > 0) {
+        myApp.services.util.show(productSearchListElement);
+        products.forEach(function(product) {
+          var listItem = myApp.services.util.createProductListItem(product);
+          listItem.onclick = function(target) {
+            selectedProducts.push(target.srcElement.parentElement.data);
+            refreshSelectedProductList();
+            
+            productSearchListElement.innerHTML = '';
+            myApp.services.util.hide(productSearchListElement);
+          };
+          productSearchListElement.insertBefore(listItem);
+        }); 
+      } else {
+        myApp.services.util.hide(productSearchListElement);
+      }
+    };
+
+    page.querySelector("#query").onblur = function(target){
+      
+      // Needed a delay as the list item onclick will not be triggred,
+      // if we remove the element at the same time.
+      setTimeout(function(){
+        productSearchListElement.innerHTML = '';
+        myApp.services.util.hide(productSearchListElement);
+      }, 100);
+    };
   },
 
   ////////////////////////////////

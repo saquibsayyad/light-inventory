@@ -1,0 +1,4 @@
+myApp.repository = {
+    products: [],
+    sales: []
+}

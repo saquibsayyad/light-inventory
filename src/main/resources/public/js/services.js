@@ -20,7 +20,6 @@ myApp.services = {
           '</div>' +
           '<div class="right">' +
           sale.salesTime +
-          //   '<ons-icon style="color: grey; padding-left: 4px" icon="ion-ios-trash-outline, material:md-delete"></ons-icon>' +
           '</div>' +
         '</ons-list-item>'
       );
@@ -67,23 +66,22 @@ myApp.services = {
         );
 
         // Store data within the element.
-            productListItem.data = product;
+        productListItem.data = product;
 
-            var productsList = document.querySelector('#product-list');
-            productsList.insertBefore(productListItem);
+        var productsList = document.querySelector('#product-list');
+        productsList.insertBefore(productListItem);
 
-            // Add functionality to push 'sales_details.html' page with the current element as a parameter.
-            productsList.onclick = function() {
-            document.querySelector('#myNavigator')
-              .pushPage('html/product_details.html',
-                {
-                  animation: 'lift',
-                  data: {
-                    element: productListItem
-                  }
-                }
-              );
-          };
+        // Add functionality to push 'sales_details.html' page with the current element as a parameter.
+        productsList.onclick = function() {
+        document.querySelector('#myNavigator')
+          .pushPage('html/product_details.html',
+            {
+              animation: 'lift',
+              data: {
+                element: productListItem
+              }
+            });
+        };
       },
 
       getList: async function() {
@@ -94,6 +92,21 @@ myApp.services = {
         const response = await fetch('/products', opts);
         return response.json();
      },
+
+     search: function(input, maxResult=5) {
+       input = input.toLowerCase();
+       var products = [];
+       var _products = myApp.repository.products;
+       for(var i=0; i< _products.length && maxResult > 0; ++i) {
+        var product = _products[i];
+        if(product.id == input || product.name.toLowerCase().includes(input) || product.description.toLowerCase().includes(input)){
+          products.push(product);
+          --maxResult;
+        }
+       }
+       return products;
+     }
+
     },
   /////////////////
   // Task Service //
@@ -322,6 +335,38 @@ myApp.services = {
     formatAmount: function(amount) {
       var amount = parseFloat(amount);
       return amount.toFixed(2);
+    },
+
+    show: function(element) {
+      element.style.display = "block";
+    },
+    
+    hide: function(element) {
+      element.style.display = "none";
+    },
+
+    // Product related Utilities
+    createProductListItem: function(product) {
+      var productListItem = ons.createElement(
+        '<ons-list-item tappable>' +
+          '<label class="left">' +
+          product.id +
+          '</label>' +
+          '<div class="center">' +
+          product.name +
+          '</div>' +
+          '<div class="right">' +
+          product.quantity +
+          '</div>' +
+          '<div class="right">' +
+          product.price +
+          '</div>' +
+        '</ons-list-item>'
+      );
+      // Store data within the element.
+      productListItem.data = product;
+
+      return productListItem;
     }
   }
 };
