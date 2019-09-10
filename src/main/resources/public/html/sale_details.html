@@ -15,44 +15,49 @@
   </ons-toolbar>
   <ons-list>
     <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
+      <div class="left left-label">
           Sales ID
-      </ons-if>
+      </div>
       <div class="center">
-        <ons-input id="id" type="text" placeholder="Sales ID" float disabled></ons-input>
+        <label id="id"></label>
       </div>
     </ons-list-item>
     
     <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
+      <div class="left left-label">
         Total Sales
-      </ons-if>
+      </div>
       <div class="center">
-        <ons-input id="totalSales" type="text" placeholder="Total Sales" float disabled></ons-input>
+        <label id="totalSales"></label>
       </div>
     </ons-list-item>
 
     <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
+      <div class="left left-label">
         Total Tax
-      </ons-if>
+      </div>
       <div class="center">
-        <ons-input id="totalTax" type="text" placeholder="Total Tax" float disabled></ons-input>
+        <label id="totalTax"></label>
       </div>
     </ons-list-item>
 
     <ons-list-item modifier="nodivider">
-      <ons-if platform="ios other" class="left left-label">
+      <div class="left left-label">
         Total Amount
-      </ons-if>
+      </div>
       <div class="center">
-        <ons-input id="totalAmount" type="text" placeholder="Total Amount" float disabled></ons-input>
+        <label id="totalAmount"></label>
       </div>
     </ons-list-item>
 
     <p>Products</p>
+    <ons-list-item tappable>
+      <label class="left">Id</label>
+      <label class="center">Name</label>
+      <div class="right">Quantity</div>
+      <div class="right">Price</div>
+    </ons-list-item>
     <ons-list id="productList">
     </ons-list>
-
   </ons-list>
 </ons-page>
