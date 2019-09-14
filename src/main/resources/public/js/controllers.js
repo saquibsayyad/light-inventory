@@ -57,17 +57,17 @@ myApp.controllers = {
 
     salesItem.data.productSale.forEach(function(productSales){
       var productListItem = ons.createElement(
-        '<ons-row style="border: 1px solid">' +
-          '<ons-col><div class="tabbar__label">' +
+        '<ons-row >' +
+          '<ons-col><div class="toolbar">' +
           productSales.id +
           '</div></ons-col>' +
-          '<ons-col><div class="tabbar__label">' +
+          '<ons-col><div class="toolbar">' +
           productSales.product.name +
           '</div></ons-col>' +
-          '<ons-col><div class="tabbar__label">' +
+          '<ons-col><div class="toolbar">' +
           productSales.saleQuantity +
           '</div></ons-col>' +
-          '<ons-col><div class="tabbar__label">' +
+          '<ons-col><div class="toolbar">' +
           productSales.salePrice +
           '</div></ons-col>' +
         '</ons-row>'
