@@ -163,3 +163,7 @@ ons-splitter-side[side="left"][animation="overlay"] {
     height: 0;
   }
 }
+
+.header_list{
+  font-size:20px;
+}
